@@ -334,8 +334,9 @@ module.exports = function (grunt) {
                         '*.{ico,png,txt}',
                         '.htaccess',
                         'images/{,*/}*.webp',
-                        'styles/fonts/{,*/}*.*'<% if (compassBootstrap) { %>,
-                        'bower_components/sass-bootstrap/fonts/*.*'<% } %>
+                        'styles/fonts/{,*/}*.*'<% if (bootstrap && less) { %>,
+                        'bower_components/bootstrap/fonts/*.*'<% } else { %>
+                        'bower_components/bootstrap-stylus/fonts/*.*' <% } %>
                     ]
                 }]
             },

@@ -25,8 +25,8 @@ WebappJavaGenerator = module.exports = (args, options, config) ->
   @pkg = JSON.parse @readFileAsString path.join __dirname, '../package.json'
 
   console.log 'Run this generator at the root of the web project.'
-  console.log 'For maven java web project, webapp path should be "src/main/webapp".'
-  console.log 'For normal java web project, webapp path should be "WebContent"'
+  console.log 'For maven Java web project, webapp path should be "src/main/webapp".'
+  console.log 'For normal Java web project, webapp path should be "WebContent"'
 
 util.inherits WebappJavaGenerator, yeoman.generators.Base
 
@@ -93,27 +93,24 @@ WebappJavaGenerator.prototype.askFor = () ->
   }]
 
   @prompt prompts, (answers) =>
-    @webappPath = path.join __dirname, answers.webappPath
-    @mkdir @webappPath
-
-    hasFeature = (feat, list) -> list.indexOf(feat) isnt -1
+    @webappPath = answers.webappPath
+    console.log path.join __dirname, @webappPath
 
     cssPrecompilers = answers.cssPrecompiler
-    @less = hasFeature 'less', cssPrecompilers
-    @stylus = hasFeature 'stylus', cssPrecompilers
+    @less = 'less' in cssPrecompilers
+    @stylus = 'stylus' in cssPrecompilers
 
     @oldIE = answers.oldIE
 
     @includeResponsive = answers.includeResponsive
 
     mvcFramework = answers.mvcFramework
-    @angular = hasFeature 'angular', mvcFramework
-    @backbone = hasFeature 'backbone', mvcFramework
+    @angular = 'angular' in mvcFramework
+    @backbone = 'backbone' in mvcFramework
 
     features = answers.features
-
-    @bootstrap = hasFeature 'bootstrap', features
-    @includeModernizr = hasFeature 'includeModernizr', features
+    @bootstrap = 'bootstrap' in features
+    @includeModernizr = 'includeModernizr' in features
 
     cb()
 
@@ -128,8 +125,8 @@ WebappJavaGenerator.prototype.git = () ->
   @copy 'gitattributes', '.gitattributes'
 
 WebappJavaGenerator.prototype.bower = () ->
-  @copy 'bowerrc', '.bowerrc'
-  @copy '_bower.json', 'bower.json'
+  @template 'bowerrc', '.bowerrc'
+  @template '_bower.json', 'bower.json'
 
 WebappJavaGenerator.prototype.jshint = () ->
   @copy 'jshintrc', '.jshintrc'
@@ -139,9 +136,9 @@ WebappJavaGenerator.prototype.editorConfig = () ->
 
 WebappJavaGenerator.prototype.mainStylesheet = () ->
   if @bootstrap
-    @copy 'main.styl', "#{@webapp}/styles/main.styl}"
-  else
-    @copy 'main.css', "#{@webapp}/styles/main.css'}"
+    @copy 'main.styl', "#{@webappPath}/styles/main.styl"
+  else if @less
+    @copy 'main.less', "#{@webappPath}/styles/main.less"
 
 WebappJavaGenerator.prototype.writeIndex = () ->
 
@@ -160,13 +157,13 @@ WebappJavaGenerator.prototype.writeIndex = () ->
       searchPath: '.tmp'
 
 WebappJavaGenerator.prototype.app = () ->
-  @mkdir 'app'
-  @mkdir 'app/scripts'
-  @mkdir 'app/styles'
-  @mkdir 'app/images'
-  @write 'app/index.html', @indexFile
+  @mkdir "#{@webappPath}"
+  @mkdir "#{@webappPath}/scripts"
+  @mkdir "#{@webappPath}/styles"
+  @mkdir "#{@webappPath}/images"
+  @write "#{@webappPath}/index.html", @indexFile
 
   if @coffee
-    @write 'app/scripts/hello.coffee', @mainCoffeeFile
+    @write "#{@webappPath}/scripts/hello.coffee", @mainCoffeeFile
 
-  @write 'app/scripts/main.js', 'console.log(\'\\\'Allo \\\'Allo!\');'
+  @write "#{@webappPath}/scripts/main.js", 'console.log(\'\\\'Allo \\\'Allo!\');'

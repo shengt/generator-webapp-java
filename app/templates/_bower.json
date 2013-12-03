@@ -3,9 +3,16 @@
   "version": "0.0.0",
   "dependencies": {<% if (bootstrap && stylus) { %>
     "bootstrap-stylus": "~3.0.0",<% } %><% if (includeModernizr) { %>
-    "modernizr": "~2.6.2",<% } %>
-    "jquery": "~1.10.2"<% if (oldIE) { %>
-    "requirejs": "~2.1.9"<% } %>
+    "modernizr": "~2.6.2",<% } %><% if (oldIE) { %>
+    "selectivizr": "1.0.2",
+    "jquery-migrate": "~1.2.1",<% } %><% if (includeResponsive) { %>
+    "html5-mobile-boilerplate": "~4.1.0",<% } %><% if (includeResponsive && oldIE) { %>
+    "respond": "1.3.0",<% } %><% if (backbone) { %>
+    "backbone-amd": "~1.1.0",
+    "underscore-amd": "~1.5.2",<% } %><% if (angular) { %>
+    "angular": "~1.2.3",<% } %>
+    "jquery": "~1.10.2",
+    "requirejs": "~2.1.9"
   },
   "devDependencies": {}
 }

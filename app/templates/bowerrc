@@ -1,0 +1,3 @@
+{
+    "directory": "<%= webappPath %>/bower_components"
+}
