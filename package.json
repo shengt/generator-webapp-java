@@ -1,15 +1,17 @@
 {
   "name": "generator-webapp-java",
-  "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "version": "0.1.0",
+  "description": "A generator for Yeoman Java webapp",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "webapp",
+    "java"
   ],
   "homepage": "https://github.com/shengt/generator-webapp-java",
   "bugs": "https://github.com/shengt/generator-webapp-java/issues",
   "author": {
-    "name": "",
-    "email": "",
+    "name": "Sheng Tian",
+    "email": "shengt@gmail.com",
     "url": "https://github.com/shengt"
   },
   "main": "app/index.js",
@@ -21,7 +23,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "yeoman-generator": "~0.14.0"
+    "yeoman-generator": "~0.14.0",
+    "coffee-script": "~1.6.3"
   },
   "devDependencies": {
     "mocha": "~1.14.0"
