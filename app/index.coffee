@@ -83,7 +83,7 @@ WebappJavaGenerator.prototype.askFor = () ->
     name: 'features'
     choices: [{
       name: 'Bootstrap'
-      value: 'bootstrap'
+      value: 'includeBootstrap'
       checked: true
     }, {
       name: 'Modernizr'
@@ -109,7 +109,7 @@ WebappJavaGenerator.prototype.askFor = () ->
     @backbone = 'backbone' in mvcFramework
 
     features = answers.features
-    @bootstrap = 'bootstrap' in features
+    @includeBootstrap = 'includeBootstrap' in features
     @includeModernizr = 'includeModernizr' in features
 
     cb()
@@ -135,7 +135,7 @@ WebappJavaGenerator.prototype.editorConfig = () ->
   @copy 'editorconfig', '.editorconfig'
 
 WebappJavaGenerator.prototype.mainStylesheet = () ->
-  if @bootstrap
+  if @includeBootstrap
     @copy 'main.styl', "#{@webappPath}/styles/main.styl"
   else if @less
     @copy 'main.less', "#{@webappPath}/styles/main.less"

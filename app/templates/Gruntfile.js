@@ -42,9 +42,9 @@ module.exports = function (grunt) {
             gruntfile: {
                 files: ['Gruntfile.js']
             },
-            compass: {
-                files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass:server', 'autoprefixer']
+            stylus: {
+                files: ['<%%= yeoman.app %>/styles/{,*/}*.{styl}'],
+                tasks: ['stylus', 'autoprefixer']
             },
             styles: {
                 files: ['<%%= yeoman.app %>/styles/{,*/}*.css'],
@@ -169,34 +169,6 @@ module.exports = function (grunt) {
                 }]
             }
         },<% } %>
-
-        // Compiles Sass to CSS and generates necessary files if requested
-        compass: {
-            options: {
-                sassDir: '<%%= yeoman.app %>/styles',
-                cssDir: '.tmp/styles',
-                generatedImagesDir: '.tmp/images/generated',
-                imagesDir: '<%%= yeoman.app %>/images',
-                javascriptsDir: '<%%= yeoman.app %>/scripts',
-                fontsDir: '<%%= yeoman.app %>/styles/fonts',
-                importPath: '<%%= yeoman.app %>/bower_components',
-                httpImagesPath: '/images',
-                httpGeneratedImagesPath: '/images/generated',
-                httpFontsPath: '/styles/fonts',
-                relativeAssets: false,
-                assetCacheBuster: false
-            },
-            dist: {
-                options: {
-                    generatedImagesDir: '<%%= yeoman.dist %>/images/generated'
-                }
-            },
-            server: {
-                options: {
-                    debugInfo: true
-                }
-            }
-        },
 
         // Add vendor prefixed styles
         autoprefixer: {
@@ -333,7 +305,7 @@ module.exports = function (grunt) {
                         '*.{ico,png,txt}',
                         '.htaccess',
                         'images/{,*/}*.webp',
-                        'styles/fonts/{,*/}*.*'<% if (bootstrap && less) { %>,
+                        'styles/fonts/{,*/}*.*'<% if (includeBootstrap && less) { %>,
                         'bower_components/bootstrap/fonts/*.*'<% } else { %>
                         'bower_components/bootstrap-stylus/fonts/*.*' <% } %>
                     ]
@@ -365,8 +337,7 @@ module.exports = function (grunt) {
         // Run some tasks in parallel to speed up build process
         concurrent: {
             server: [
-                'compass:server',<% if (coffee) { %>
-                'coffee:dist',<% } %>
+                <% if (coffee) { %>'coffee:dist',<% } %>
                 'copy:styles'
             ],
             test: [<% if (coffee) { %>
@@ -375,7 +346,6 @@ module.exports = function (grunt) {
             ],
             dist: [<% if (coffee) { %>
                 'coffee',<% } %>
-                'compass',
                 'copy:styles',
                 'imagemin',
                 'svgmin',
