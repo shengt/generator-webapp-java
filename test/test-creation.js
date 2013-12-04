@@ -13,7 +13,10 @@ describe('webapp-java generator', function () {
             }
 
             this.app = helpers.createGenerator('webapp-java:app', [
-                '../../app'
+                '../../app', [
+                    helpers.createDummyGenerator(),
+                    'mocha:app'
+                ]
             ]);
             done();
         }.bind(this));
@@ -39,6 +42,7 @@ describe('webapp-java generator', function () {
             'mvcFramework': ['backbone'],
             'features': ['includeBootstrap', 'includeModernizr']
         });
+        this.app.coffee = true;
         this.app.options['skip-install'] = true;
         this.app.run({}, function () {
             helpers.assertFiles(expected);
