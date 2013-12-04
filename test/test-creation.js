@@ -23,11 +23,21 @@ describe('webapp-java generator', function () {
         var expected = [
             // add files you expect to exist here.
             '.jshintrc',
-            '.editorconfig'
+            '.editorconfig',
+            'package.json',
+            'bower.json',
+            'Gruntfile.js',
+            '.gitignore',
+            '.gitattributes'
         ];
 
         helpers.mockPrompt(this.app, {
-            'someOption': true
+            'webappPath': 'src/main/webapp',
+            'oldIE': true,
+            'cssPrecompiler': ['stylus'],
+            'includeResponsive': true,
+            'mvcFramework': ['backbone'],
+            'features': ['includeBootstrap', 'includeModernizr']
         });
         this.app.options['skip-install'] = true;
         this.app.run({}, function () {
