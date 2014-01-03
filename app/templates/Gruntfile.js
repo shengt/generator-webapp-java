@@ -63,6 +63,12 @@ module.exports = function (grunt) {
             }
         },
 
+        stylus: {
+            compile: {
+                options: {}
+            }
+        },
+
         // The actual grunt server settings
         connect: {
             options: {
@@ -338,11 +344,11 @@ module.exports = function (grunt) {
         concurrent: {
             server: [
                 <% if (coffee) { %>'coffee:dist',<% } %>
-                'copy:styles'
+                'newer:copy:styles'
             ],
             test: [<% if (coffee) { %>
                 'coffee',<% } %>
-                'copy:styles'
+                'newer:copy:styles'
             ],
             dist: [<% if (coffee) { %>
                 'coffee',<% } %>
