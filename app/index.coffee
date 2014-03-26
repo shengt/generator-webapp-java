@@ -40,7 +40,7 @@ WebappJavaGenerator.prototype.askFor = () ->
 
   prompts = [{
     name: 'webappPath'
-    message: 'Where is your webapp path related to the current folder?'
+    message: 'Where is your webapp related to the current folder?'
     default: 'src/main/webapp'
   }, {
     type: 'confirm'
